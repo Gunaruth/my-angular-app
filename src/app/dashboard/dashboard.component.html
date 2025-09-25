@@ -1,0 +1,65 @@
+
+<div *ngIf="data && data.length" style="overflow-x:auto;">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Engagement Name</th>
+        <th>Type</th>
+        <th>Created By</th>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>Group Name</th>
+        <th>Group Status</th>
+        <th>Opinion Name</th>
+        <th>Opinion Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let engagement of data">
+        <ng-container *ngIf="engagement.opinionOptions && engagement.opinionOptions.length; else noOpinion">
+          <tr *ngFor="let opinion of engagement.opinionOptions">
+            <td>{{ engagement.engagementName }}</td>
+            <td>{{ engagement.engagementType || 'N/A' }}</td>
+            <td>{{ engagement.createdBy }}</td>
+            <td>{{ engagement.createdAt | date:'yyyy-MM-dd' }}</td>
+            <td>{{ engagement.status }}</td>
+            <td>
+              <ng-container *ngIf="engagement.groupLinked && engagement.groupLinked.length">
+                {{ engagement.groupLinked[0].name }}
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngIf="engagement.groupLinked && engagement.groupLinked.length">
+                {{ engagement.groupLinked[0].status }}
+              </ng-container>
+            </td>
+            <td>{{ opinion.name }}</td>
+            <td>{{ opinion.status }}</td>
+          </tr>
+        </ng-container>
+        <ng-template #noOpinion>
+          <tr>
+            <td>{{ engagement.engagementName }}</td>
+            <td>{{ engagement.engagementType || 'N/A' }}</td>
+            <td>{{ engagement.createdBy }}</td>
+            <td>{{ engagement.createdAt | date:'yyyy-MM-dd' }}</td>
+            <td>{{ engagement.status }}</td>
+            <td>
+              <ng-container *ngIf="engagement.groupLinked && engagement.groupLinked.length">
+                {{ engagement.groupLinked[0].name }}
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngIf="engagement.groupLinked && engagement.groupLinked.length">
+                {{ engagement.groupLinked[0].status }}
+              </ng-container>
+            </td>
+            <td colspan="2" style="text-align:center;">No opinion options</td>
+          </tr>
+        </ng-template>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+ 
